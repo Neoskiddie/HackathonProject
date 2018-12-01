@@ -1,7 +1,8 @@
-from ev3dev.ev3 import *
-from time import sleep #for controling time
-import sys, termios, tty, os, time
+from ev3dev.ev3 import * # library for controling ev3
+from time import sleep 
+import sys, termios, tty, os #for keyboard listening
  
+ #method for listening for keys
 def getch():
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
@@ -14,15 +15,11 @@ def getch():
     return ch
  
 
-#ultrasonic stuff
+#initialising ultrasonic sensor
 us = UltrasonicSensor() 
-
 # Put the US sensor into distance mode.
 us.mode='US-DIST-CM'
-
 units = us.units
-
-
 
 #motors initialisation
 m = LargeMotor('outB')
@@ -33,8 +30,8 @@ control=''
 
 Sound.play('/home/robot/Beginning.wav').wait()#opening sound
 
-print('Lets begin')
- #calculating value for distance
+print('Lets begin') #starting script takes few seconds. This just indicates when it is ready.
+
 while control != 'q':
     distance = us.value()/10
     char = getch()
